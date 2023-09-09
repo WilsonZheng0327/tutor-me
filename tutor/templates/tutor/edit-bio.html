@@ -1,0 +1,66 @@
+
+<!-- NOT USED ANYMORE -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block nav %}
+    <h1 class="title">Tutor-Me</h1>
+    <a class="tab" href="{% url 'tutor:dashboard' %}">Home</a>
+    <a class="tab" href="{% url 'tutor:see-profile' %}">Profile</a>
+    <a class="tab" href="{% url 'tutor:availability' %}">Availability</a>
+
+    
+    <div class="logout">
+        <form action = "{% url 'account_logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block content %}
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <link rel="stylesheet" href = "{% static 'student/style.css' %}">
+        <link rel="stylesheet" href="{% static 'shared-css/common.css' %}">
+    </head>
+    <body>
+        <div class="main">
+            <ul>
+                <form id = "edit" method="POST" action="{% url 'tutor:save-bio' %}">
+                        {% csrf_token %}
+
+                <p> First Name:</p>
+                <input type = "text" name="edit_first_name" form="edit" placeholder= "{{ tutor.first_name }}" value="{{ tutor.first_name }}"></input>
+                <p> Last Name:</p>
+                <input type = "text" placeholder="{{ tutor.last_name }}" value = "{{ tutor.last_name }}" name="edit_last_name" form="edit">
+                <p> Rate:</p>
+                <input type = "text" placeholder="{{ tutor.rate }}" value ="{{ tutor.rate }}" name="edit_rate" form="edit">
+                <p> Bio:</p>
+                <input type = "text" placeholder="{{ tutor.bio }}" value ="{{ tutor.bio }}" name="edit_bio" form="edit">
+                <button type="submit" form = "edit">Save</button></form>
+
+            <!--      <form id = "remove_courses" method="POST" action="{% url 'tutor:remove-courses' %}">-->
+            <!--          {% csrf_token %}-->
+            <!--      </form>-->
+
+            <!--      <input type = "text" placeholder="Remove_Courses" name="remove_course" form="remove_courses">-->
+            <!--      <button type="submit" form = "remove_courses">Remove Course</button>-->
+
+                <p> Courses: </p>
+                {% for course in tutor.courses.all %}
+                    <li> {{ course }} </li>
+                {% endfor %}
+
+                <form id = "add_course_redirect" method="get" action="{% url 'tutor:add-course-redirect' %}">
+                    
+                </form>
+                <button type="submit" form="add_course_redirect">Add More Courses</button>
+            </ul>
+        </div>
+    </body>
+</html>
+ {% endblock %}
+

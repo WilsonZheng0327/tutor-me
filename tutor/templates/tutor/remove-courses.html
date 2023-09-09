@@ -1,0 +1,49 @@
+{% extends 'tutor/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href = "{% static 'tutor/style.css' %}">
+</head>
+
+
+<div class="container">
+  <div class = "text-center">
+      <h3>Remove Courses</h3>
+  </div>
+  <div>
+    <div class="overflow-auto" style="height: 50vh; width: 40vw;">
+
+      <ul class="list-group">
+      {% for course in courses %}
+        <li class="list-group-item">
+          <form action="{% url 'tutor:remove-courses-action' course.id %}" method="post">
+            {% csrf_token %}
+            <h3>{{ course.subject }} {{ course.catalog_num }}</h3>
+            <p> {{ course.title }}</p>
+          <button style="background-color:#e32d2d; border-color:#e32d2d" type="submit" class="btn btn-primary">Remove</button>
+          </form>
+        </li>
+      {% endfor %}
+      {% if len == 0 %} 
+        <p style="margin-left:20px;">No results / Already added</p>
+      {% endif %}
+      </ul>
+    </div>
+
+    <div style="justify-content: center; display: flex; margin: 20px;">
+      <form action="{% url 'tutor:see-profile' %}">
+          <button type="submit" class="btn btn-primary">Done</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+</body>
+</html>

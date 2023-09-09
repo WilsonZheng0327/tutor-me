@@ -1,0 +1,39 @@
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+<html lang="en">
+    <header>
+        {% block head %}
+            <link rel="stylesheet" href="{% static 'shared-css/common.css' %}">
+        {% endblock %}
+
+        <meta charset="UTF-8">
+
+        <nav>
+            {% block nav %}
+            <h1 class="title">Tutor-Me</h1>
+            <div class="logout">
+                <form action = "{% url 'account_logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            </div>
+            {% endblock %}
+        </nav>
+    </header>
+
+        <div class="content">
+            {% block content %}
+                <!-- main content replaces this block -->
+            {% endblock %}
+        </div>
+
+        <footer>
+            {% block footer %}
+            <p class="footer-p">&copy; Group A-28. All rights reserved.</p>
+            {% endblock %}
+        </footer>
+</html>

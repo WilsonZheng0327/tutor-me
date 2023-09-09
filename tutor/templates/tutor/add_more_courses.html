@@ -1,0 +1,58 @@
+{% extends 'tutor/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href = "{% static 'tutor/style.css' %}">
+</head>
+
+
+<div class="container">
+  <div class = "text-center">
+      <h3>Add More Courses</h3>
+  </div>
+  <div>
+    <form class="search-form" method="get" action="{% url 'tutor:course-search-additional' %}">
+
+      <input class="form-control search-bar" type="search" name="query" placeholder="Search for a course by name, subject, or mnemonic ..." style="border-radius:30px 0px 0px 30px;">
+
+          <button class="search-btn" type="submit" style="color: white;">Search</button>
+    </form>
+
+    <div class="overflow-auto" style="height: 50vh; width: 40vw;">
+      {% if results == None %}
+      <p>Search results appear here...</p>
+      {% endif %}
+      <ul class="list-group">
+      {% for course in results %}
+        <li class="list-group-item">
+          <form action="{% url 'tutor:add-course-additional' course.id %}" method="post">
+            {% csrf_token %}
+            <h3>{{ course.subject }} {{ course.catalog_num }}</h3>
+            <p> {{ course.title }}</p>
+          <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+        </li>
+      {% endfor %}
+      {% if len == 0 %} 
+        <p style="margin-left:20px;">No results / Already added</p>
+      {% endif %}
+      </ul>
+    </div>
+
+    <div style="justify-content: center; display: flex; margin: 20px;">
+      <form action="{% url 'tutor:see-profile' %}">
+          <button type="submit" class="btn btn-primary">Done</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+</body>
+</html>

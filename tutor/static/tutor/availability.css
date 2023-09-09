@@ -1,0 +1,41 @@
+.main{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    margin-bottom: 150px;
+    margin-top: 40px;
+}
+
+table {
+    table-layout: fixed;
+    border: 1px solid black;
+}
+
+td, th {
+    border: 1px solid black;
+    height: 30px;
+    width: 80px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#save_button {
+    margin-top: 20px;
+}
+
+.choose_week {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.choose_week p, .choose_week select {
+    margin: 0; /* Remove default margin */
+}
+
+#week {
+    margin-right: 10px;
+}

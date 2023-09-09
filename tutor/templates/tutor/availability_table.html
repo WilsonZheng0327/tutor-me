@@ -1,0 +1,54 @@
+{% extends 'tutor/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        <div>
+            <h1>Select Your Availability</h1>
+            <form method="POST" action="{% url 'tutor:update-availability' %}" id="set_availability" style="padding: 10px;">
+                {% csrf_token %}
+                <div class="choose_week">
+                    <p id="week">Choose a Week:</p>
+                    <select name="week_choice">
+                        <option value="this_week">{{ this_week }}</option>
+                        <option value="next_week">{{ next_week }}</option>
+                    </select>
+                </div>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      {% for day_of_week, day_of_week_display in formset.0.fields.day_of_week.choices %}
+                        <th>{{ day_of_week_display }}</th>
+                      {% endfor %}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for hour_of_day, hour_of_day_display in formset.0.fields.hour_of_day.choices %}
+                      <tr>
+                        <td>{{ hour_of_day_display }}</td>
+                        {% for form in formset %}
+                          {% if form.hour_of_day.value == hour_of_day %}
+                            <td>{{ form.available }}</td>
+                          {% endif %}
+                        {% endfor %}
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <button id="save_button" type="submit">Save</button>
+              </form>
+
+            <script>
+                [].forEach.call(document.getElementsByTagName('td'), function(item) { 
+                    item.addEventListener('click', function() {
+                        //  item.style.backgroundColor = '#d1ffbd';
+                    }, false); 
+                  });
+            </script>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

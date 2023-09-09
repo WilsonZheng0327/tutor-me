@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tutor-Me</title>
+</head>
+<body>
+
+{% load socialaccount %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'login/style.css' %}">
+
+
+<nav class="navbar-nav fixed-top" style="padding-left: 30px; padding-top: 15px;">
+    <p class="navbar-brand" style="font-size: 50px;">
+    <img src="{% static 'login/magistrate.png' %}" width="60" height="60" alt="">
+        Tutor-Me
+  </p>
+
+
+</nav>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

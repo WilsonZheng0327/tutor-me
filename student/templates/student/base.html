@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tutor-Me</title>
+</head>
+<body>
+
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% load static %}
+   <header>
+        {% block head %}
+            <link rel="stylesheet" href="{% static 'shared-css/common.css' %}">
+            <link rel="stylesheet" href = "{% static 'student/style.css' %}">
+        {% endblock %}
+
+        <meta charset="UTF-8">
+
+        <nav class="navbar navbar-expand-lg fixed-top">
+  <p class="navbar-brand" style="font-size: 40px; color: white;"><img src="{% static 'login/magistrate.png' %}" width="60" height="60" alt="">
+                Tutor-Me <span style="font-size:20px; color: white;">Student</span></p>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav" >
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'student:dashboard' %}" style="font-size: 20px; color: white;">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'student:search-page' %}" style="font-size: 20px; color: white;">Book Appointments</a>
+      <li class="nav-item">
+      <form class="form-inline" action = "{% url 'account_logout' %}" method="post">
+                    {% csrf_token %}
+                   <button type="submit" style="font-size: 20px; color: white;" class="btn btn-link">Logout</button>
+                </form>
+      </li>
+    </ul>
+  </div>
+</nav>
+   </header>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

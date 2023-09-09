@@ -1,0 +1,141 @@
+{% extends 'tutor/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row" style="width:100vw; height:100vh; padding-left: 50px; padding-right: 50px;">
+        <div class="col-lg-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+
+                <div class="card-header text-center">{{tutor.first_name}} {{tutor.last_name}}</div>
+
+                <div class="card-body text-center">
+                    <img class="img-account-profile" src="{% static 'login/tutor.png' %}" alt="">
+                    <div class="small font-italic text-muted mb-4"></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">Account Details</div>
+                    <div class="card-body">
+
+                        {% if editable == "readonly" %}
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <label class="small mb-1" for="inputFirstName">First name</label>
+                                <input form="edit-bio" name="edit_first_name" class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="{{tutor.first_name}}" {{ editable }}>
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="row gx-3 mb-3">
+                                <label class="small mb-1" for="inputLastName">Last name</label>
+                                <input form="edit-bio" name="edit_last_name" class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="{{tutor.last_name}}" {{ editable }}>
+                            </div>
+                            <!-- Form Row        -->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (organization name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputRate">Rate</label>
+                                    <input form="edit-bio" ame="edit_rate" class="form-control" id="inputRate" type="text" placeholder="Enter your rate" value="{{tutor.rate}}" {{ editable }}>
+                                </div>
+                                <!-- Form Group (location)-->
+                            </div>
+                            <!-- Form Group (email address)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="bio">Bio</label>
+                                <textarea form="edit-bio" name="edit_bio" class="form-control" id="bio" type="text" placeholder="{{tutor.bio}}" {{ editable }}></textarea>
+                            </div>         
+
+                            <form method="get" action="{% url 'tutor:edit-bio' %}">
+
+                                <button class="btn btn-primary" type="submit">Edit Profile</button>
+                            </form>    
+                        {% else %}
+                            <form id="edit-bio" method="post" action="{% url 'tutor:save-bio' %}" onsubmit="return validateForm()">
+                                {% csrf_token %}
+                                <!-- Form Row-->
+                                <div class="row gx-3 mb-3">
+                                    <!-- Form Group (first name)-->
+                                    <label class="small mb-1" for="inputFirstName">First name</label>
+                                    <input name="edit_first_name" class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="{{tutor.first_name}}" {{ editable }}>
+                                </div>
+                                <!-- Form Group (last name)-->
+                                <div class="row gx-3 mb-3">
+                                    <label class="small mb-1" for="inputLastName">Last name</label>
+                                    <input name="edit_last_name" class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="{{tutor.last_name}}" {{ editable }}>
+                                </div>
+                                <!-- Form Row        -->
+                                <div class="row gx-3 mb-3">
+                                    <!-- Form Group (organization name)-->
+                                    <div class="col-md-6">
+                                        <label class="small mb-1" for="inputRate">Rate</label>
+                                        <input name="edit_rate" class="form-control" id="inputRate" type="text" placeholder="Enter your rate" value="{{tutor.rate}}" {{ editable }}>
+                                    </div>
+                                    <!-- Form Group (location)-->
+                                </div>
+                                <!-- Form Group (email address)-->
+                                <div class="mb-3">
+                                    <label class="small mb-1" for="bio">Bio</label>
+                                    <textarea name="edit_bio" class="form-control" id="bio" type="text" placeholder="Enter your bio" {{ editable }}>{{tutor.bio}}</textarea>
+                                </div>         
+                                                        
+                                <button class="btn btn-primary" type="submit">Save Profile</button>
+                            </form>
+                            <script>
+                                function validateForm() {
+                                    var first = document.forms["edit-bio"]["edit_first_name"].value;
+                                    var last = document.forms["edit-bio"]["edit_last_name"].value;
+                                    var rate = document.forms["edit-bio"]["edit_rate"].value;
+                                    var bio = document.forms["edit-bio"]["edit_bio"].value;
+                
+                                    if (first == "" || last == "" || rate == "" || bio == "") {
+                                        alert("Please fill out all required fields.");
+                                        return false;
+                                    }
+
+                                    if (isNaN(rate)) {
+                                        alert("Please enter a number for your rate.")
+                                        return false;
+                                    }
+                                }
+                            </script>
+                        {% endif %}
+                    </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="card mb-4" style="overflow: hidden;">
+                <div class="card-header">Courses</div>
+                <div class="card-body">
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            {% if tutor.courses.length == 0 %}
+                              <p> No courses added </p>
+                          {% endif %}
+                          {% for course in tutor.courses.all %}
+                              <li> {{ course }} </li>
+                          {% endfor %}
+                        </div>
+                    </div>
+                    <div style="display:flex; margin-left:15px; margin-bottom:10px;">
+                        <form method="get" action="{% url 'tutor:course-search-additional' %}">
+                            <button style="margin-right:10px;" class="btn btn-primary" type="submit">Add Courses</button>
+                        </form>    
+                        <form method="get" action="{% url 'tutor:remove-courses' %}">
+                            <button style="border-color:#e32d2d; background-color:#e32d2d" class="btn btn-primary" type="submit">Remove Courses</button>
+                        </form>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+ {% endblock %}

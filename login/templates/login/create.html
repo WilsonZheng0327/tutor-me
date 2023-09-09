@@ -1,0 +1,82 @@
+{% extends 'login/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+{% load static %}
+
+<!--<div> Icons made by <a href="https://www.flaticon.com/authors/eucalyp" title="Eucalyp"> Eucalyp </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>&ndash;&gt;-->
+
+<section class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card" style="width: 20rem; margin-right: 50px;">>
+          <div class="card-body">
+              <div class="text-center">
+                <p class="card-title" style="font-size: 35px; color: #043b5c">
+                <img src="{% static 'login/student.png' %}" width="60" height="60" alt="">
+                    Students
+                 </p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="color: #043b5c;">Search for tutors by course</li>
+                    <li class="list-group-item" style="color: #043b5c;">Book appointments</li>
+                    <li class="list-group-item" style="color: #043b5c;">Leave and read reviews for tutors</li>
+                </ul>
+                <a href="{% url 'student:create-student' %}" class="btn" style="margin: 15px; background: #043b5c; color: white;">Sign Up Student</a>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card" style="width: 20rem; margin-left: 50px;">>
+          <div class="card-body">
+              <div class="text-center">
+                <p class="card-title" style="font-size: 35px; color: #043b5c">
+                <img src="{% static 'login/tutor.png' %}" width="60" height="60" alt="">
+                    Tutors
+                 </p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" style="color: #043b5c;">Offer courses you've taken</li>
+                    <li class="list-group-item" style="color: #043b5c;">Set your own rates and times</li>
+                    <li class="list-group-item" style="color: #043b5c;">Accept or reject appointment requests</li>
+                </ul>
+                <a href="{% url 'tutor:create-tutor' %}" class="btn" style="margin: 15px; background: #043b5c; color: white;">Sign Up Tutor</a>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+<!--    <div class="boxes">-->
+<!--            <div class="a-container">-->
+<!--                <div class="text-center">-->
+<!--                 <p class="a-text">Students</p>-->
+<!--                    <div>-->
+<!--                        <p>Search for tutors by course</p>-->
+<!--                        <p>Book appointments</p>-->
+<!--                        <p>Leave and read reviews for tutors</p>-->
+<!--                     </div>-->
+<!--                    <form padding=50px action="{% url 'student:create-student' %}" method="post">-->
+<!--                    {% csrf_token %}-->
+<!--                    <button class="btn btn-light fw-bold" type="submit" style="color: white; background:transparent;">Sign Up Student</button>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="a-container">-->
+<!--                <div class="text-center">-->
+<!--                <p class="a-text">Tutors</p>-->
+<!--                <div>-->
+<!--                    <p>Offer courses you've taken</p>-->
+<!--                    <p>Set your own rates and times</p>-->
+<!--                    <p>Accept or reject appointment requests</p>-->
+<!--                </div>-->
+<!--                <form action="{% url 'tutor:create-tutor' %}" method="post">-->
+<!--                {% csrf_token %}-->
+<!--                <button class="btn btn-light fw-bold" type="submit" style="color: white; background:transparent;">Sign Up Tutor</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        </div>-->
+
+<!--</section>-->
+{% endif %}
+{% endblock %}

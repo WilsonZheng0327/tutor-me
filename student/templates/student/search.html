@@ -1,0 +1,97 @@
+{% extends 'student/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block content %}
+
+
+<div class="container">
+        <div class = "text-center">
+            <h3>Book New Appointments</h3>
+            </div>
+
+            <form class="search-form" action="{% url 'student:search-results' %}" method="get">
+                <input class="form-control search-bar" type="search" name="query" placeholder="Search for a tutor or a course by name, subject, or mnemonic ...">
+                <button type="submit" class="search-btn">Search</button>
+            </form>
+            <div id="search-results">
+                {% if results == None %}
+                <p>Tutors appear here...</p>
+                {% endif %}
+                {% if length == 0 %}
+                <div class="text-center">
+                <h5>No tutors found. Your course might not be offered by any tutors at this time.</h5>
+                    </div>
+                {% endif %}
+                <div class="accordion" id="accordionExample">
+                {% for tutor in results %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                        {% if tutor.average_rating == 0.0 %}
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                          {{ tutor.first_name }} {{ tutor.last_name }} - No Reviews Yet
+                        </button>
+                          {% else %}
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                          {{ tutor.first_name }} {{ tutor.last_name }} - {{ tutor.average_rating }}
+                        </button>
+                          {% endif %}
+                      </h2>
+                      <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <p>Check out <a href="{% url 'student:reviews-page' tutor.id %}" target="_blank" rel="noopener noreferrer">Read Reviews for {{tutor.first_name}}</a>.</p>
+                            <strong>About {{ tutor.first_name }}</strong>
+                            <p>{{ tutor.bio }}</p>
+                            <strong>Rate: $ {{ tutor.rate }}</strong>
+                            <div class="book-appt-section">
+                                <form id="reqApptForm{{ forloop.counter }}" action="{% url 'student:request-appt' tutor.id %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                              
+                                          <div class="dropdown">
+                                            <label for="course">Select a Course:</label>
+                                            <select name="selected-course" id="course">
+                                              {% for course in tutor.courses.all %}
+                                              <option value="{{ course.id }}">{{ course }}</option>
+                                              {% endfor %}
+                                            </select>
+                                            </div>
+                                            <div class="dropdown">
+                                            <label for="time">Select a Time:</label>
+                                            <select name="selected-time" id="time">
+                                              
+                                              {% for dur in tutor.get_sorted_avail %}
+                                              {% if dur.start not in unavail %}
+                                              <option value="{{ dur.id }}">{{ dur }} </option>
+                                              {% endif %}
+                                              {% endfor %}
+                                              <!-- {% if tutor.get_week1_availability != None %}
+                                              {% for key, value in tutor.get_week1_availability %}
+                                              <option value="{{ key }}">{{ key }}</option>
+                                              {% endfor %}
+                                              {% endif %} -->
+                                            </select>
+                                          </div>
+                                        </div>
+                                        
+                                        
+
+                                      <label for="apptNotes{{ forloop.counter }}" class="form-label">Appointment Notes</label>
+                                      <input form="reqApptForm{{ forloop.counter }}" name="notes" type="text" class="form-control" id="apptNotes{{ forloop.counter }}">
+                                      <div id="apptHelp{{ forloop.counter }}" class="form-text">Any notes you have for your tutor.</div>
+                                      <button form="reqApptForm{{ forloop.counter }}" type="submit" class="btn btn-primary">Request</button>
+                                    </div>
+                                
+                                
+                                </form>
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+                    </div>
+                 </div>
+                </div>
+                {% endblock %}
+ 

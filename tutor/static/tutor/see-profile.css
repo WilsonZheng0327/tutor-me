@@ -1,0 +1,74 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    width: 100%;
+    background: white;
+}
+
+
+
+/* main content */
+
+.main {
+    max-width: 1100px;
+    margin: auto;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    height: 100%;
+}
+
+.available_times {
+    margin-top: 10px;
+    display: flex;
+}
+
+.time_block{
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px;
+    border: 1px solid #043b5b;
+    background-color: #e6f1f7;
+    border-radius: 5px;
+}
+
+.available_text {
+    font-weight: 700;
+}
+
+.info_box {
+    margin-top: 40px;
+    padding: 20px;
+    border: 1px solid #043b5b;
+    width: 35%;
+    background-color: #e6f1f7;
+    border-radius: 5px;
+}
+
+.info {
+    display: flex;
+}
+
+.info_title {
+    width: 80px;
+    font-weight: 700;
+}
+
+#edit {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#edit_button {
+    border-color: #043b5c;
+    border-radius: 8px;
+    width: 100px;
+    background-color: #edeff0;
+}

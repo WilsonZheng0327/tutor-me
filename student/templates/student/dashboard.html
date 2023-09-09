@@ -1,0 +1,176 @@
+{% extends 'student/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block content %}
+<div class="container">
+      <div class="dash-header">
+        <h1>Welcome {{ user.student }}...</h1>
+        <h3>View your appointments below</h3>
+      </div>
+        
+        <div class="main">
+          
+
+<!--            <form action = "{% url 'student:search-page' %}" method = "post">-->
+<!--                {% csrf_token %}-->
+<!--                <button class = "search-page-btn" type="submit">Search</button>-->
+<!--            </form>-->
+
+
+<!-- Tabs navs -->
+<div class="appt-card">
+<ul class="nav nav-tabs mb-3" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link active"
+        id="tab-1"
+        data-bs-toggle="tab"
+        href="#tabs-1"
+        role="tab"
+        aria-controls="tabs-1"
+        aria-selected="true"
+        >Upcoming Appointments</a
+      >
+    </li>
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link"
+        id="tab-2"
+        data-bs-toggle="tab"
+        href="#tabs-2"
+        role="tab"
+        aria-controls="tabs-2"
+        aria-selected="false"
+        >Pending Appointments</a
+      >
+    </li>
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link"
+        id="tab-3"
+        data-bs-toggle="tab"
+        href="#tabs-3"
+        role="tab"
+        aria-controls="tabs-3"
+        aria-selected="false"
+        >Past Appointments</a
+      >
+    </li>
+  </ul>
+  <!-- Tabs navs -->
+  
+  <!-- Tabs content -->
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="tabs-1" role="tabpanel" aria-labelledby="tab-1">
+      <div class="accordion accordion-flush" style="width: 60vw;">
+        <ul class="list-group list-group-flush" style="width: 60vw;">
+            {% if future_len == 0 %}
+                <p style="padding-left: 20px;">No upcoming appointments</p>
+            {% endif %}
+            {% for appt in future_appts %}
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-heading{{ forloop.counter }}"></h2>
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="flush-collapse{{ forloop.counter }}">
+                        {{ appt.tutor }} {{ appt.duration }}
+                    </button>
+                  <div id="flush-collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ forloop.counter }}" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body" style="font-size:16px;"> <strong>Course: {{ appt.course }}</strong>
+                            <p>Notes: {{ appt.notes }}</p>
+              </div>
+
+                  <!-- <div id="flush-collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ forloop.counter }}" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                  </div> -->
+                </div>
+            {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="tabs-2" role="tabpanel" aria-labelledby="tab-2">
+      <div class="accordion accordion-flush" style="width: 60vw;">
+        <ul class="list-group list-group-flush" >
+            {% if pending_len == 0 %}
+                <p style="padding-left: 20px;">No pending appointments</p>
+            {% endif %}
+            {% for appt in pending_appts %}
+            <div class="accordion-item">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="flush-collapse{{ forloop.counter }}">
+                    {{ appt.tutor }} {{ appt.duration }}
+                </button>
+            <div id="flush-collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ forloop.counter }}" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body" style="font-size:16px;"> <strong>Course: {{ appt.course }}</strong>
+                            <p>Notes: {{ appt.notes }}</p>
+              </div>
+
+              <!-- <div id="flush-collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ forloop.counter }}" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+              </div> -->
+            </div>
+            {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="tabs-3" role="tabpanel" aria-labelledby="tab-3">
+      <div class="accordion accordion-flush" style="width: 60vw;">
+        <ul class="list-group list-group-flush" >
+            {% if past_len == 0 %}
+                <p style="padding-left: 20px;">No past appointments</p>
+            {% endif %}
+            {% for appt in past_appts %}
+            <div class="list-group-item">{{ appt.tutor }} {{ appt.course }}
+
+                {% if appt.reviewed %}
+                <span> - </span>
+                {% if rev.rating == 1 %}
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                    {% elif rev.rating == 2 %}
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                    {% elif rev.rating == 3 %}
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                    {% elif rev.rating == 4 %}
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                    {% else %}
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    {% endif %}
+                {% else %}
+            <form action = "{% url 'student:review-tutor' appt.id %}" method="post">
+                {% csrf_token %}
+          
+            <span><button type="submit">Review</button></span>
+                {% endif %}
+        
+          </form>
+        </div>
+            {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+        </div>
+      </div>
+    </div>
+      
+ {% endblock %}

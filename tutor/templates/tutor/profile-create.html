@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% load static %}
+   <header>
+        {% block head %}
+            <link rel="stylesheet" href="{% static 'shared-css/common.css' %}">
+            <link rel="stylesheet" href = "{% static 'tutor/style.css' %}">
+        {% endblock %}
+
+        <nav class="navbar navbar-expand-lg fixed-top">
+  <p class="navbar-brand" style="font-size: 40px; color: white;"><img src="{% static 'login/magistrate.png' %}" width="60" height="60" alt="">
+                Tutor-Me <span style="font-size:20px; color: white;">Tutor</span></p>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav" >
+    <ul class="navbar-nav ms-auto">
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="{% url 'tutor:dashboard' %}" style="font-size: 20px; color: white;">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'tutor:see-profile' %}" style="font-size: 20px; color: white;">Profile</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'tutor:availability' %}" style="font-size: 20px; color: white;">Availability</a>
+        </li> -->
+      <li class="nav-item">
+      <form class="form-inline" action = "{% url 'account_logout' %}" method="post">
+                    {% csrf_token %}
+                   <button type="submit" style="font-size: 20px; color: white;" class="btn btn-link">Logout</button>
+                </form>
+      </li>
+    </ul>
+  </div>
+</nav>
+   </header>
+
+{% block content %}
+<html>
+<head>
+  <link rel="stylesheet" href = "{% static 'tutor/style.css' %}">
+</head>
+
+    <body>
+
+    <div class="container">
+        <div class = "text-center">
+            <h3>Create Your Profile</h3>
+            </div>
+       <div class="progresses">
+           <div class="steps step1">
+               <span><i class="fa fa-check"></i>1</span>
+           </div>
+           <span class="line"></span>
+           <div class="steps">
+               <span><i class="fa fa-check"></i>2</span>
+           </div>
+           <span class="line"></span>
+           <div class="steps">
+               <span class="font-weight-bold">3</span>
+           </div>
+       </div>
+            <div class="card" style="width: 30rem; margin:20px;">
+        <form class="row g-3" id = "profile-form" action="{% url 'tutor:create-tutor-profile' %}" method="POST" onsubmit="return validateForm()" style="margin:20px; color: #043b5c;">
+            {% csrf_token %}
+            <div class="col-md-12">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" name="first" id="firstName" placeholder="Tom" required>
+            </div>
+            <div class="col-md-12">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="last" placeholder="Horton" required>
+            </div>
+           <div class="col-md-6">
+                <label for="rate" class="form-label">Hourly Rate</label>
+                 <div class="input-group">
+                    <div class="input-group-text">$</div>
+                    <input type="number" class="form-control" id="rate" name="rate" placeholder="15.00" required>
+                 </div>
+            </div>
+            <div class="col-md-12">
+                <label for="bio" class="form-label">Bio</label>
+                <textarea class="form-control" id="bio" name="bio" placeholder="I am a fourth-year CS major..." style="background-color:#E0E7EB;" required></textarea>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Next</button>
+                <!-- <p class="form-label" style="margin-top:10px;">(This information can be changed later)</p> -->
+            </div>
+        </form>
+
+            </div>
+            </div>
+        </div>
+        </div>
+            <script>
+                function validateForm() {
+                    var first = document.forms["profile-form"]["first"].value;
+                    var last = document.forms["profile-form"]["last"].value;
+                    var rate = document.forms["profile-form"]["rate"].value;
+                    var bio = document.forms["profile-form"]["bio"].value;
+
+                    if (first == "" || last == "" || rate == "" || bio == "") {
+                        alert("Please fill out all required fields.");
+                        return false;
+                    }
+                }
+            </script>
+
+    </body>
+
+</html>
+
+{% endblock %}
+
+
+</body>
+</html>

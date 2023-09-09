@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% load static %}
+   <header>
+        {% block head %}
+            <link rel="stylesheet" href="{% static 'shared-css/common.css' %}">
+            <link rel="stylesheet" href = "{% static 'tutor/style.css' %}">
+        {% endblock %}
+
+        <meta charset="UTF-8">
+
+        <nav class="navbar navbar-expand-lg fixed-top">
+  <p class="navbar-brand" style="font-size: 40px; color: white;"><img src="{% static 'login/magistrate.png' %}" width="60" height="60" alt="">
+                Tutor-Me <span style="font-size:20px; color: white;">Tutor</span></p>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav" >
+    <ul class="navbar-nav ms-auto">
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="{% url 'tutor:dashboard' %}" style="font-size: 20px; color: white;">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'tutor:see-profile' %}" style="font-size: 20px; color: white;">Profile</a>
+      </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'tutor:availability' %}" style="font-size: 20px; color: white;">Availability</a>
+        </li> -->
+      <li class="nav-item">
+      <form class="form-inline" action = "{% url 'account_logout' %}" method="post">
+                    {% csrf_token %}
+                   <button type="submit" style="font-size: 20px; color: white;" class="btn btn-link">Logout</button>
+                </form>
+      </li>
+    </ul>
+  </div>
+</nav>
+   </header>
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href = "{% static 'tutor/style.css' %}">
+</head>
+
+
+<div class="container">
+  <div class = "text-center">
+      <h3>Create Your Profile</h3>
+  </div>
+  <div class="progresses">
+      <div class="steps step1">
+          <span><i class="fa fa-check"></i>1</span>
+      </div>
+      <span class="line"></span>
+      <div class="steps step1">
+          <span><i class="fa fa-check"></i>2</span>
+      </div>
+      <span class="line"></span>
+      <div class="steps step3">
+          <span class="font-weight-bold">3</span>
+      </div>
+  </div>
+
+  <div>
+    <form class="search-form" method="get" action="{% url 'tutor:course-search' %}">
+
+      <input class="form-control search-bar" type="search" name="query" placeholder="Search for a course by name, subject, or mnemonic ..." style="border-radius:30px 0px 0px 30px;">
+
+          <button class="search-btn" type="submit" style="color: white;">Search</button>
+    </form>
+
+    <div class="overflow-auto" style="height: 50vh; width: 40vw;">
+      {% if results == None %}
+      <p>Search results appear here...</p>
+      {% endif %}
+      <ul class="list-group">
+      {% for course in results %}
+        <li class="list-group-item">
+          <form action="{% url 'tutor:add-course' course.id %}" method="post">
+            {% csrf_token %}
+            <h3>{{ course.subject }} {{ course.catalog_num }}</h3>
+            <p> {{ course.title }}</p>
+          <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+        </li>
+      {% endfor %}
+      {% if len == 0 %} 
+        <p style="margin-left:20px;">No results / Already added</p>
+      {% endif %}
+      </ul>
+    </div>
+
+    <div style="justify-content: center; display: flex; margin: 20px;margin-top: 0px;">
+      <form action="{% url 'tutor:availability' %}">
+          <button type="submit" class="btn btn-primary">Next</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+</body>
+</html>

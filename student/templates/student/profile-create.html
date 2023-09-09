@@ -1,0 +1,80 @@
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+
+   <header>
+        {% block head %}
+            <link rel="stylesheet" href="{% static 'shared-css/common.css' %}">
+            <link rel="stylesheet" href = "{% static 'student/style.css' %}">
+        {% endblock %}
+
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <p class="navbar-brand" style="font-size: 40px; color: white;"><img src="{% static 'login/magistrate.png' %}" width="60" height="60" alt="">
+                Tutor-Me <span style="font-size:20px; color: white;">Student</span></p>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav" >
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'student:dashboard' %}" style="font-size: 20px; color: white;">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'student:search-page' %}" style="font-size: 20px; color: white;">Book Appointments</a>
+                    <li class="nav-item">
+                        <form class="form-inline" action = "{% url 'account_logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" style="font-size: 20px; color: white;" class="btn btn-link">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+   </header>
+
+   <body>
+        {% block content %}
+            <div class="container">
+                <div class="card" style="width: 30rem; margin:20px;">
+                        <form class="row g-3" id = "profile-form" action="{% url 'student:create-student-profile' %}" method="POST" onsubmit="return validateForm()" style="margin:20px; color: #043b5c;">
+                                <div class="text-center"><h3>Enter Your Name</h3></div>
+                            {% csrf_token %}
+                            <div class="col-md-12">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" name="first" id="firstName" placeholder="Tom" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" name="last" placeholder="Horton" required>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Next</button>
+                            </div>
+                
+                            <script>
+                                function validateForm() {
+                                    var first = document.forms["profile-form"]["first"].value;
+                                    var last = document.forms["profile-form"]["last"].value;
+                                
+                                    if (first == "" || last == "") {
+                                        alert("Please fill out all required fields.");
+                                        return false;
+                                    }
+                                }
+                            </script>
+                        </form>
+                </div>
+            </div>
+        {% endblock %}
+    </body>
+</html>
+
+

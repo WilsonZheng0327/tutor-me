@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
+  </head>
+  <body>
+  {% load socialaccount %}
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+{% load static %}
+  <link rel="stylesheet" href="{% static 'login/style.css' %}">
+    {% block body %}
+  <nav class="navbar-nav fixed-top" style="padding-left: 30px; padding-top: 15px;">
+    <p class="navbar-brand" style="font-size: 50px;">
+    <img src="{% static 'login/magistrate.png' %}" width="60" height="60" alt="">
+        Tutor-Me
+  </p>
+
+
+</nav>
+
+
+
+
+
+<!--    {% if messages %}-->
+<!--    <div>-->
+<!--      <strong>Messages:</strong>-->
+<!--      <ul>-->
+<!--        {% for message in messages %}-->
+<!--        <li>{{message}}</li>-->
+<!--        {% endfor %}-->
+<!--      </ul>-->
+<!--    </div>-->
+<!--    {% endif %}-->
+
+    <div>
+<!--      <strong>Menu:</strong>-->
+      <ul>
+<!--        {% if user.is_authenticated %}-->
+<!--        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>-->
+<!--        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>-->
+<!--        {% else %}-->
+<!--        <li><a href="{% url 'account_login' %}">Sign In</a></li>-->
+<!--        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>-->
+<!--        {% endif %}-->
+      </ul>
+    </div>
+    {% block content %}
+    {% endblock %}
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+  </body>
+</html>

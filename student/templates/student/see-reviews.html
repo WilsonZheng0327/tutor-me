@@ -1,0 +1,62 @@
+{% extends 'student/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Average Rating for {{tutor.first_name}} - {{tutor.average_rating}}</h2>
+     <div id="search-results">
+                {% if reviews.length == 0 %}
+                <p>Reviews will appear here...</p>
+                {% endif %}
+                <div class="accordion" id="accordionExample">
+                {% for rev in reviews %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                           {% if rev.rating == 1 %}
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                    {% elif rev.rating == 2 %}
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                    {% elif rev.rating == 3 %}
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                        <span class="star">☆</span>
+                    {% elif rev.rating == 4 %}
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">☆</span>
+                    {% else %}
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    {% endif %}
+                            <span style="margin-left: 5px;"> - {{ rev.appointment.student.name }}</span>
+                        </button>
+                      </h2>
+                      <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>Course: {{ rev.appointment.course }}</strong>
+                            <p>{{ rev.testimonial }}</p>
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+                    </div>
+</div>
+</div>
+{% endblock %}

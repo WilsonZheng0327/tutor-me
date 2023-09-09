@@ -1,0 +1,13 @@
+{% extends 'login/base.html' %}
+{% load socialaccount %}
+{% block content %}
+{% if not user.is_authenticated %}
+  <section class="container">
+      <div style="padding-bottom: 25px;">
+          <h1 class="display-4" style="padding-bottom:25px;">Get help for the courses you're taking. Earn money for the courses you've taken.</h1>
+          <button type="button" class="btn btn-light btn-lg" onclick="window.location.href='{% provider_login_url 'google' %}'" style="color: white; background:transparent;">Study With Us</button>
+      </div>
+  </section>
+
+{% endif %}
+{% endblock %}

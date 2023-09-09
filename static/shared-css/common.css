@@ -1,0 +1,50 @@
+
+
+h1.title {
+font-size: 25pt;
+color: white
+}
+
+.tab{
+color: white
+}
+
+.logout {
+padding-right: 0;
+}
+
+/* body */
+
+body {
+    width: 100%;
+    margin-top: 50px;
+    background-color: white;
+    font-family: 'Times', sans-serif !important;
+    height:100vh;
+}
+
+.content {
+    /* padding-top: 108px; */
+    /* margin-bottom: 65px; */
+
+}
+
+/* footer */
+
+footer {
+    position: relative;
+    overflow: hidden;
+    background-color: #043b5c;
+    bottom: 0;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.footer-p {
+padding-left: 10%;
+padding-right: 10%;
+color: white
+}
+

@@ -2,6 +2,8 @@
 
 Tutor Me is a web application used to connect tutors and students.
 
+**Heroku service no longer available.
+
 ## Getting Started
 
 In terminal, clone the repository to your local machine

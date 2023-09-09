@@ -73,6 +73,7 @@ GitHub Actions is set to automatically deploy the app to Heroku when changes are
 
 ## Authors
 
-* **Oscar Lauth** - *DevOps* - [oscar-lauth](https://github.com/oscar-lauth)
-* **First Last** - *Role* \
+* **Wilson Zheng**
+* **Oscar Lauth**
+* **Malina Nelson**
 Add names to file

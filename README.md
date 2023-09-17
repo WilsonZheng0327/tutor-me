@@ -78,4 +78,3 @@ GitHub Actions is set to automatically deploy the app to Heroku when changes are
 * **Wilson Zheng**
 * **Oscar Lauth**
 * **Malina Nelson**
-Add names to file

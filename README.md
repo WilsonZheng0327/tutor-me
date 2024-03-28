@@ -4,24 +4,11 @@ Tutor Me is a web application used to connect tutors and students.
 
 **Heroku service no longer available.
 
-## Getting Started
-
-In terminal, clone the repository to your local machine
-
-Using HTTPS:
-```
-$ git clone https://github.com/uva-cs3240-s23/project-a-28.git
-```
-OR\
-Using SSH:
-```
-$ git clone git@github.com:uva-cs3240-s23/project-a-28.git
-```
 ## Setting up venv
 
 It is recommended to install packages and run Python within a virtual environment.
 
-Move into the /project-a-28 directory and run the following to create the venv (only run this once):
+Move into the /tutor_me directory and run the following to create the venv (only run this once):
 ```
 $ python3 -m venv venv
 ```
